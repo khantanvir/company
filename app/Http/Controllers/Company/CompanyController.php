@@ -156,5 +156,5 @@ class CompanyController extends Controller
             'val'=>'Company Value Roll Back Successfully'
         );
         return response()->json($data,200);
-    }
+    } 
 }
