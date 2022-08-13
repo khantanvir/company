@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class EmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=>'required|min:2',
-            'description'=>'required'
+            'first_name'=>'required|min:2|max:30',
+            'last_name'=>'required|min:2|max:30',
+            'company_id'=>'required',
+            'email'=>'required|min:4|max:64|unique:employees',
+            'phone'=>'required|min:2|max:30'
         ];
     }
 }

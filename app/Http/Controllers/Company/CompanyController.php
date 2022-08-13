@@ -9,6 +9,7 @@ use App\Models\Company\Company;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Session;
 use App\Helper\Service;
+use App\Models\Employee\Employee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -156,5 +157,47 @@ class CompanyController extends Controller
             'val'=>'Company Value Roll Back Successfully'
         );
         return response()->json($data,200);
-    } 
+    }
+    //get company list 
+    public function get_company_list($search=NULL){
+        if(!empty($search)){
+            $list = Company::where('name','LIKE','%'.$search.'%')->where('status',0)->where('is_deleted',0)->get();
+            $data['result'] = array(
+                'key'=>200,
+                'val'=>$list
+            );
+            return response()->json($data,200);
+        }else{
+            $list = Company::where('status',0)->where('is_deleted',0)->get();
+            $data['result'] = array(
+                'key'=>200,
+                'val'=>$list
+            );
+            return response()->json($data,200);
+        }
+
+    }
+    //get employee list
+    public function get_employee_list($search=NULL){
+        if(!empty($search)){
+            $list = Employee::where('first_name','LIKE','%'.$search.'%')->orWhere('last_name','LIKE','%'.$search.'%')->where('status',0)->where('is_deleted',0)->get();
+        }else{
+            $list = Employee::where('status',0)->where('is_deleted',0)->get();
+        }
+        $emp = array();
+        foreach($list as $row){
+            $emp[] = array(
+                'first_name'=>$row->first_name,
+                'last_name'=>$row->last_name,
+                'company'=>$row->Company->name,
+                'email'=>$row->email,
+                'phone'=>$row->phone,
+            );
+        }
+        $data['result'] = array(
+            'key'=>200,
+            'val'=>$emp
+        );
+        return response()->json($data,200);
+    }
 }

@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->tinyInteger('status')->default(0);
-            $table->tinyInteger('is_deleted')->default(0);
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->integer('company_id')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->text('url')->nullable();
+            $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('is_deleted')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('employees');
     }
 };

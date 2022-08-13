@@ -23,7 +23,7 @@ class LoginController extends Controller{
         try{
             if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])){
                 if(Auth::user()->role->name=='admin'){
-                    return redirect('/');
+                    return redirect('/dashboard');
                 }else{
                     Auth::logout();
                     Session::flash('warning', 'Opps! You don,t have any permission to login this system!');
